@@ -1,6 +1,8 @@
 #!/bin/env ruby
 # encoding: utf-8
 
+require 'date'
+require 'combine_popolo_memberships'
 require 'scraperwiki'
 require 'nokogiri'
 require 'open-uri'
@@ -22,9 +24,24 @@ def noko_for(url)
   Nokogiri::HTML(open(url).read)
 end
 
+# The terms of senators are 6 years long, but offset by two or four
+# years from their colleagues, so we're assuming that each year is a
+# different term. Each session runs from the 1st of March to the 30th
+# of November each year, [1] so treat those as the start and end dates
+# of each "term".
+# [1] https://en.wikipedia.org/wiki/National_Congress_of_Argentina
+terms = (2015..Date.today.year).map do |year|
+  {
+    id: year,
+    start_date: Date.new(year, 3, 1).to_s,
+    end_date: Date.new(year, 11, 30).to_s,
+  }
+end
+
 def scrape_list(url)
+  memberships = []
   noko = noko_for(url)
-  noko.xpath('//div[@class="tab-content"]//table//tr[td]').each do |tr|
+  noko.xpath('//div[@class="tab-content"]//table//tr[td]').map do |tr|
     tds = tr.css('td')
     person_url = URI.join(url, tds[0].css('a/@href').text).to_s
     family_name, given_name = tds[1].css('a').text.split("\n").map { |n| n.sub(',','').tidy }.reject(&:empty?)
@@ -45,15 +62,19 @@ def scrape_list(url)
       phone: tds[5].xpath('.//i[@class="icon-bell"]//following-sibling::text()[contains(.,"+54")]').text.tidy,
       facebook: tds[5].css('a[href*="facebook"]/@href').text.tidy,
       twitter: tds[5].css('a[href*="twitter"]/@href').text.tidy,
-      # 6 year terms, so we should split these all into three, but for
-      # now just take the latest one
-      term: 2015,
       source: person_url,
     }
     # }.merge(scrape_person(person_url))
     data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
-    ScraperWiki.save_sqlite([:id, :term], data)
+    data
   end
 end
 
-scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
+memberships_from_page = scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
+
+data = CombinePopoloMemberships.combine(
+  id: memberships_from_page,
+  term: terms,
+)
+
+ScraperWiki.save_sqlite([:id, :term], data)
