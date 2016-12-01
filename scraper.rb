@@ -11,8 +11,10 @@ require 'colorize'
 require 'pry'
 require 'open-uri/cached'
 OpenURI::Cache.cache_path = '.cache'
-
 require 'scraped_page_archive/open-uri'
+require 'require_all'
+
+require_rel 'lib'
 
 class String
   def tidy
@@ -42,29 +44,7 @@ def scrape_list(url)
   noko = noko_for(url)
   noko.xpath('//div[@class="tab-content"]//table//tr[td]').map do |tr|
     tds = tr.css('td')
-    person_url = URI.join(url, tds[0].css('a/@href').text).to_s
-    start_date, end_date = tds[4].text.split("\n").map(&:tidy).map { |d| d.split("/").reverse.join("-") }
-    data = { 
-      id: person_url.split('/').last,
-      image: tds[0].css('a img/@src').text,
-      sort_name: tds[1].css('a')
-                       .text
-                       .split("\n")
-                       .map { |n| n.sub(',','').tidy }
-                       .reject(&:empty?).first,
-      district: tds[2].text.tidy,
-      party: tds[3].text.tidy,
-      start_date: start_date,
-      end_date: end_date,
-      email: tds[5].css('a[href*="mailto:"]/@href').text.sub('mailto:','').tidy,
-      phone: tds[5].xpath('.//i[@class="icon-bell"]//following-sibling::text()[contains(.,"+54")]').text.tidy,
-      facebook: tds[5].css('a[href*="facebook"]/@href').text.tidy,
-      twitter: tds[5].css('a[href*="twitter"]/@href').text.tidy,
-      source: person_url,
-    }
-    # }.merge(scrape_person(person_url))
-    data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
-    data
+    MemberSection.new(response: Scraped::Request.new(url: url).response, noko: tds).to_h
   end
 end
 
