@@ -44,16 +44,15 @@ def scrape_list(url)
   noko.xpath('//div[@class="tab-content"]//table//tr[td]').map do |tr|
     tds = tr.css('td')
     person_url = URI.join(url, tds[0].css('a/@href').text).to_s
-    family_name, given_name = tds[1].css('a').text.split("\n").map { |n| n.sub(',','').tidy }.reject(&:empty?)
     start_date, end_date = tds[4].text.split("\n").map(&:tidy).map { |d| d.split("/").reverse.join("-") }
-
     data = { 
       id: person_url.split('/').last,
       image: tds[0].css('a img/@src').text,
-      name: "#{given_name} #{family_name}",
-      sort_name: "#{family_name}, #{given_name}",
-      given_name: given_name,
-      family_name: family_name,
+      sort_name: tds[1].css('a')
+                       .text
+                       .split("\n")
+                       .map { |n| n.sub(',','').tidy }
+                       .reject(&:empty?).first,
       district: tds[2].text.tidy,
       party: tds[3].text.tidy,
       start_date: start_date,
