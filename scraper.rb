@@ -39,7 +39,6 @@ terms = (2015..Date.today.year).map do |year|
 end
 
 def scrape_list(url)
-  memberships = []
   noko = noko_for(url)
   noko.xpath('//div[@class="tab-content"]//table//tr[td]').map do |tr|
     tds = tr.css('td')
