@@ -22,10 +22,6 @@ class String
   end
 end
 
-def noko_for(url)
-  Nokogiri::HTML(open(url).read)
-end
-
 # The terms of senators are 6 years long, but offset by two or four
 # years from their colleagues, so we're assuming that each year is a
 # different term. Each session runs from the 1st of March to the 30th
@@ -41,17 +37,13 @@ terms = (2015..Date.today.year).map do |year|
 end
 
 def scrape_list(url)
-  noko = noko_for(url)
-  noko.xpath('//div[@class="tab-content"]//table//tr[td]').map do |tr|
-    tds = tr.css('td')
-    MemberSection.new(response: Scraped::Request.new(url: url).response, noko: tds).to_h
-  end
+  MembersList.new(response: Scraped::Request.new(url: url).response).members
 end
 
 memberships_from_page = scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
 
 data = CombinePopoloMemberships.combine(
-  id: memberships_from_page,
+  id: memberships_from_page.map(&:to_h),
   term: terms,
 )
 
