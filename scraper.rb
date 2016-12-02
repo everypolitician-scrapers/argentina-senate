@@ -35,13 +35,20 @@ terms = (2015..Date.today.year).map do |year|
 end
 
 def scrape_list(url)
-  MembersList.new(response: Scraped::Request.new(url: url).response).members
+  MembersList.new(response: Scraped::Request.new(url: url).response)
+             .members
+             .map(&:to_h)
+             .map do |member|
+              member.merge(MemberPage.new(
+                response: Scraped::Request.new(url: member[:source]).response
+                ).to_h)
+             end
 end
 
 memberships_from_page = scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
 
 data = CombinePopoloMemberships.combine(
-  id: memberships_from_page.map(&:to_h),
+  id: memberships_from_page,
   term: terms,
 )
 
