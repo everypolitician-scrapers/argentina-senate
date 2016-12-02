@@ -16,7 +16,7 @@ require_rel 'lib'
 
 class String
   def tidy
-    self.gsub(/[[:space:]]+/, ' ').strip
+    gsub(/[[:space:]]+/, ' ').strip
   end
 end
 
@@ -30,19 +30,26 @@ terms = (2015..Date.today.year).map do |year|
   {
     id: year,
     start_date: Date.new(year, 3, 1).to_s,
-    end_date: Date.new(year, 11, 30).to_s,
+    end_date: Date.new(year, 11, 30).to_s
   }
 end
 
 def scrape_list(url)
-  MembersList.new(response: Scraped::Request.new(url: url).response).members
+  MembersList.new(response: Scraped::Request.new(url: url).response)
+             .members
+             .map(&:to_h)
+             .map do |member|
+               member.merge(MemberPage.new(
+                 response: Scraped::Request.new(url: member[:source]).response
+               ).to_h)
+             end
 end
 
 memberships_from_page = scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
 
 data = CombinePopoloMemberships.combine(
-  id: memberships_from_page.map(&:to_h),
-  term: terms,
+  id: memberships_from_page,
+  term: terms
 )
 
 ScraperWiki.save_sqlite([:id, :term], data)
