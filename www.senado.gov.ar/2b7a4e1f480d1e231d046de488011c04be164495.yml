@@ -1,0 +1,38 @@
+---
+request:
+  method: get
+  uri: http://www.senado.gov.ar/senadores/senador/463
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Date:
+    - Fri, 02 Dec 2016 10:24:19 GMT
+    Server:
+    - Apache
+    X-Powered-By:
+    - PHP/5.3.10-pl0-gentoo
+    Set-Cookie:
+    - PHPSESSID=9ta3rokhimv7rsb88qvcejije0; expires=Fri, 02-Dec-2016 10:54:19 GMT;
+      path=/
+    Cache-Control:
+    - no-cache
+    Connection:
+    - close
+    Content-Type:
+    - text/html; charset=UTF-8
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 02 Dec 2016 10:25:33 GMT
