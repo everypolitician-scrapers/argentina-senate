@@ -1,0 +1,38 @@
+---
+request:
+  method: get
+  uri: http://www.senado.gov.ar/senadores/senador/422
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Date:
+    - Fri, 02 Dec 2016 10:24:23 GMT
+    Server:
+    - Apache
+    X-Powered-By:
+    - PHP/5.3.10-pl0-gentoo
+    Set-Cookie:
+    - PHPSESSID=go12fh2e80ssc1u6sbpolb4ge5; expires=Fri, 02-Dec-2016 10:54:23 GMT;
+      path=/
+    Cache-Control:
+    - no-cache
+    Connection:
+    - close
+    Content-Type:
+    - text/html; charset=UTF-8
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Fri, 02 Dec 2016 10:25:37 GMT
