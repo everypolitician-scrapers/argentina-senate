@@ -18,13 +18,13 @@ response:
     message: OK
   headers:
     Date:
-    - Thu, 06 Jul 2017 11:17:57 GMT
+    - Tue, 11 Jul 2017 16:55:14 GMT
     Server:
     - Apache
     X-Powered-By:
     - PHP/5.3.10-pl0-gentoo
     Set-Cookie:
-    - PHPSESSID=jbf68l4bmm9ue7l9ta0q2jtaf5; expires=Thu, 06-Jul-2017 11:47:57 GMT;
+    - PHPSESSID=cr7uqn10mltrci15snqmahlc53; expires=Tue, 11-Jul-2017 17:25:14 GMT;
       path=/
     Cache-Control:
     - no-cache
@@ -35,4 +35,4 @@ response:
   body:
     encoding: ASCII-8BIT
   http_version: 
-recorded_at: Thu, 06 Jul 2017 11:19:32 GMT
+recorded_at: Tue, 11 Jul 2017 16:56:45 GMT
