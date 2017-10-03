@@ -33,6 +33,14 @@ class MemberSection < Scraped::HTML
     dates.last
   end
 
+  field :mandate_start do
+    start_date
+  end
+
+  field :mandate_end do
+    end_date
+  end
+
   field :email do
     noko[5].css('a[href*="mailto:"]/@href').text.sub('mailto:','').tidy
   end
