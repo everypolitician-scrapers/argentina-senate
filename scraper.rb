@@ -7,7 +7,6 @@ require 'combine_popolo_memberships'
 require 'scraperwiki'
 require 'nokogiri'
 require 'open-uri'
-require 'colorize'
 
 require 'pry'
 require 'scraped_page_archive/open-uri'
