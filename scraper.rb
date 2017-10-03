@@ -55,4 +55,5 @@ data = CombinePopoloMemberships.combine(
   term: terms
 )
 
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 ScraperWiki.save_sqlite(%i[id term], data)
