@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'scraped'
 
 class MemberPage < Scraped::HTML

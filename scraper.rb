@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'date'
 require 'combine_popolo_memberships'
@@ -54,4 +55,4 @@ data = CombinePopoloMemberships.combine(
   term: terms
 )
 
-ScraperWiki.save_sqlite([:id, :term], data)
+ScraperWiki.save_sqlite(%i[id term], data)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'scraped'
 
 class MemberSection < Scraped::HTML
@@ -42,7 +44,7 @@ class MemberSection < Scraped::HTML
   end
 
   field :email do
-    noko[5].css('a[href*="mailto:"]/@href').text.sub('mailto:','').tidy
+    noko[5].css('a[href*="mailto:"]/@href').text.sub('mailto:', '').tidy
   end
 
   field :phone do
