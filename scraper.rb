@@ -10,6 +10,8 @@ require 'colorize'
 
 require 'pry'
 require 'scraped_page_archive/open-uri'
+# require 'open-uri/cached'
+# OpenURI::Cache.cache_path = '.cache'
 require 'require_all'
 
 require_rel 'lib'
