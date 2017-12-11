@@ -1,0 +1,40 @@
+---
+request:
+  method: get
+  uri: http://www.senado.gov.ar/senadores/senador/485
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Date:
+    - Mon, 11 Dec 2017 11:19:52 GMT
+    Server:
+    - Apache
+    X-Powered-By:
+    - PHP/5.3.10-pl0-gentoo
+    Set-Cookie:
+    - PHPSESSID=5jjdigucn5d13ue5t47t7jif17; expires=Mon, 11-Dec-2017 11:49:52 GMT;
+      path=/
+    Cache-Control:
+    - no-cache
+    Connection:
+    - close
+    Content-Type:
+    - text/html; charset=UTF-8
+    Content-Length:
+    - '35358'
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Mon, 11 Dec 2017 11:21:01 GMT
