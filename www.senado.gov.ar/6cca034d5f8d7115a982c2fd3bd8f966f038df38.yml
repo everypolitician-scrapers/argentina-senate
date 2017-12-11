@@ -1,0 +1,40 @@
+---
+request:
+  method: get
+  uri: http://www.senado.gov.ar/senadores/senador/478
+  body:
+    encoding: US-ASCII
+    string: ''
+  headers:
+    Accept-Encoding:
+    - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    Accept:
+    - "*/*"
+    User-Agent:
+    - Ruby
+response:
+  status:
+    code: 200
+    message: OK
+  headers:
+    Date:
+    - Mon, 11 Dec 2017 11:06:21 GMT
+    Server:
+    - Apache
+    X-Powered-By:
+    - PHP/5.3.10-pl0-gentoo
+    Set-Cookie:
+    - PHPSESSID=k12l7qo4f37qi7tg5a71veuss0; expires=Mon, 11-Dec-2017 11:36:21 GMT;
+      path=/
+    Cache-Control:
+    - no-cache
+    Connection:
+    - close
+    Content-Type:
+    - text/html; charset=UTF-8
+    Content-Length:
+    - '36895'
+  body:
+    encoding: ASCII-8BIT
+  http_version: 
+recorded_at: Mon, 11 Dec 2017 11:07:32 GMT
