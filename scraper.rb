@@ -21,6 +21,12 @@ class String
   end
 end
 
+def scraper(pair)
+  url, klass = pair.to_a.first
+  warn url
+  klass.new(response: Scraped::Request.new(url: url).response)
+end
+
 # The terms of senators are 6 years long, but offset by two or four
 # years from their colleagues, so we're assuming that each year is a
 # different term. Each session runs from the 1st of March to the 30th
@@ -35,21 +41,13 @@ terms = (2015..Date.today.year).map do |year|
   }
 end
 
-def scrape_list(url)
-  MembersList.new(response: Scraped::Request.new(url: url).response)
-             .members
-             .map(&:to_h)
-             .map do |member|
-               member.merge(MemberPage.new(
-                 response: Scraped::Request.new(url: member[:source]).response
-               ).to_h)
-             end
+url = 'http://www.senado.gov.ar/senadores/listados/listaSenadoRes'
+memberships = scraper(url => MembersList).members.map(&:to_h).map do |member|
+  member.merge(scraper(member[:source] => MemberPage).to_h)
 end
 
-memberships_from_page = scrape_list('http://www.senado.gov.ar/senadores/listados/listaSenadoRes')
-
 data = CombinePopoloMemberships.combine(
-  id: memberships_from_page,
+  id: memberships,
   term: terms
 )
 data.each { |mem| puts mem.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h } if ENV['MORPH_DEBUG']
