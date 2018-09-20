@@ -2,18 +2,17 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'date'
 require 'combine_popolo_memberships'
-require 'scraperwiki'
+require 'date'
 require 'nokogiri'
 require 'open-uri'
-
 require 'pry'
-require 'scraped_page_archive/open-uri'
-# require 'open-uri/cached'
-# OpenURI::Cache.cache_path = '.cache'
-require 'require_all'
+require 'scraperwiki'
 
+require 'open-uri/cached'
+OpenURI::Cache.cache_path = '.cache'
+
+require 'require_all'
 require_rel 'lib'
 
 class String
